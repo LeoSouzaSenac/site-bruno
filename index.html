@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Parabéns, Bruno!</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Fundo com imagem que aparecerá em fade-in */
+    #background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('img/banner.jpg'); /* Troque pela sua imagem */
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      z-index: 0;
+    }
+
+    #background.visible {
+      opacity: 1;
+    }
+
+    #container {
+      text-align: center;
+      z-index: 1;
+      position: relative;
+    }
+
+    #clickButton {
+      padding: 15px 30px;
+      font-size: 20px;
+      background-color: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    #clickButton:hover {
+      transform: scale(1.1);
+    }
+
+    #result {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .circle-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      animation: bounce 1s ease;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      30% { transform: translateY(-30px); }
+      50% { transform: translateY(0); }
+      70% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+
+    #congratsText {
+      font-size: 24px;
+      color: white;
+      text-shadow: 2px 2px 4px black;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .arrows {
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+.arrow {
+  position: absolute;
+  font-size: 32px;
+  animation: pulseArrow 1s infinite;
+  opacity: 0.8;
+}
+
+/* Posicionamento relativo ao botão */
+.arrow-top-left {
+  top: -80px;
+  left: 50px;
+}
+
+.arrow-top-right {
+  top: -120px;
+  right: -80px;
+}
+
+.arrow-left {
+  top: 50%;
+  left: -70px;
+  transform: translateY(-50%);
+}
+
+.arrow-right {
+  top: 50%;
+  right: -220px;
+  transform: translateY(-50%);
+}
+
+.arrow-bottom-left {
+  bottom: -120px;
+  left: 50px;
+}
+
+
+
+/* Animação de pulso */
+@keyframes pulseArrow {
+  0% { transform: scale(1) translateY(0); opacity: 0.8; }
+  50% { transform: scale(1.2) translateY(-5px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 0.8; }
+}
+  </style>
+</head>
+<body>
+
+  <!-- Div do fundo com imagem (fade-in controlado por classe) -->
+  <div id="background"></div>
+
+  <div id="container">
+    <!-- Adicione dentro de #container, antes do botão -->
+<div class="arrows">
+    <div class="arrow arrow-top-left">⬇️</div>
+    
+    <div class="arrow arrow-left">➡️</div>
+    <div class="arrow arrow-right">⬅️</div>
+    <div class="arrow arrow-bottom-left">⬆️</div>
+    
+  </div>
+    <button id="clickButton">Click here</button>
+
+    <div id="result">
+      <img class="circle-img" src="img/bruno.jpg" alt="Bruno">
+      <div id="congratsText">CONGRATULATIONS, BRUNO!</div>
+    </div>
+  </div>
+
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    const button = document.getElementById('clickButton');
+    const result = document.getElementById('result');
+    const background = document.getElementById('background');
+    const arrows = document.querySelector('.arrows'); // ⬅️ Seleciona as flechas
+  
+    button.addEventListener('click', () => {
+      background.classList.add('visible');
+      button.style.display = 'none';
+      arrows.style.display = 'none'; // ⬅️ Esconde as flechas
+      result.style.display = 'flex';
+  
+      confetti({
+        particleCount: 150,
+        spread: 90,
+        origin: { y: 0.6 }
+      });
+    });
+  </script>
+  
+
+</body>
+</html>
